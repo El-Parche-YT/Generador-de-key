@@ -337,8 +337,6 @@
         <div class="channel-name">El Parche YT</div>
         <h1>System Key Generator</h1>
         
-        <p>Para desencriptar la clave de acceso, debes visualizar al menos 1 minuto del video.</p>
-
         <!-- Contenedor donde la API de YouTube inyectará el video -->
         <div class="video-wrapper">
             <div id="player"></div>
@@ -372,7 +370,7 @@
     <div id="customNotification" class="custom-notification">✅ Key Copiada con Éxito</div>
 
     <!-- Modal de Ayuda -->
-    <div id="helpModal" class="modal">
+    <div id="helpModal" class="modal" style="display: flex;">
         <div class="modal-content">
             <button class="close-btn" onclick="toggleHelp()">X</button>
             <h2 style="color: var(--neon-color); margin-top: 0;">INSTRUCCIONES</h2>
@@ -382,12 +380,14 @@
                 <li>El sistema detectará tu progreso automáticamente.</li>
                 <li>Una vez completado, la contraseña se desbloqueará.</li>
             </ul>
+            <button class="copy-btn" onclick="toggleHelp()" style="width: 100%; margin-top: 10px;">OK</button>
         </div>
     </div>
 
     <!-- Efecto de sonido (Puedes cambiar el enlace src por tu propio archivo de audio) -->
     <audio id="unlockSound" src="https://www.myinstants.com/media/sounds/level-up-sound-effect.mp3"></audio>
     <audio id="copySound" src="https://www.myinstants.com/media/sounds/coin-collect-sound-effect.mp3"></audio>
+    <audio id="startSound" src="https://www.myinstants.com/media/sounds/discord-notification.mp3"></audio>
 
     <!-- Librería de Confeti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -404,6 +404,13 @@
         const _0xToken = 'MjAyNg==';
         const LINK_URL = 'https://cuty.io/JupVk6XI2UE'; // Pon aquí tu link de cuty
         // =================================================
+
+        // Reproducir sonido al cargar la página (cuando sale el modal)
+        window.addEventListener('load', function() {
+            var audio = document.getElementById("startSound");
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log("Audio autoplay bloqueado por el navegador"));
+        });
 
         // Cargar la API de IFrame de YouTube de forma asíncrona
         var tag = document.createElement('script');
