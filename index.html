@@ -356,6 +356,14 @@
             <p>Tu clave personal es:</p>
             <input type="text" class="key-display" id="secretKeyField" value="" readonly>
             <button class="copy-btn" id="copyBtn" onclick="copyKey()">Copiar Key</button>
+            
+            <!-- Sección del Link Desbloqueado -->
+            <div id="linkContainer" style="display: none; margin-top: 1.5rem; border-top: 1px dashed var(--neon-color); padding-top: 1rem;">
+                <p>Enlace de descarga:</p>
+                <input type="text" class="key-display" id="unlockedLink" value="" readonly style="font-size: 1.2rem; margin-bottom: 10px;">
+                <a id="directLinkBtn" href="#" target="_blank" class="copy-btn" style="text-decoration: none; display: inline-block;">IR AL ENLACE</a>
+            </div>
+
             <div id="thanksMessage" class="thanks-message" style="display: none;">¡GRACIAS POR PARTICIPAR!</div>
         </div>
     </div>
@@ -394,6 +402,7 @@
         // A. Ve a https://www.base64encode.org/ | B. Escribe tu clave y dale a Encode | C. Pega el resultado abajo.
         // El código de abajo es "GAMER-2024-PRO-KEY" encriptado:
         const _0xToken = 'MjAyNg==';
+        const LINK_URL = 'https://cuty.io/JupVk6XI2UE'; // Pon aquí tu link de cuty
         // =================================================
 
         // Cargar la API de IFrame de YouTube de forma asíncrona
@@ -526,6 +535,11 @@
 
             // Insertar la contraseña
             keyField.value = atob(_0xToken); // Desencriptar automáticamente
+
+            // Mostrar el link y configurar el botón
+            document.getElementById('linkContainer').style.display = 'block';
+            document.getElementById('unlockedLink').value = LINK_URL;
+            document.getElementById('directLinkBtn').href = LINK_URL;
         }
 
         function copyKey() {
