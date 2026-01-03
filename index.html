@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator - Gaming Edition</title>
+    <!-- Fuente Gaming de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-color: #00f3ff; /* Azul Neón */
+            --bg-color: #0a0a0a;
+            --panel-bg: #111;
+            --text-color: #fff;
+            --locked-color: #ff003c;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-color);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            padding: 2rem;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--neon-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Estilo del Logo */
+        .logo {
+            width: 100px; /* Tamaño compacto y fijo */
+            height: 100px; /* Mismo alto para hacerlo circular */
+            object-fit: cover; /* Evita que la imagen se deforme */
+            border-radius: 50%; /* Lo convierte en un círculo perfecto */
+            border: 3px solid var(--neon-color); /* Borde neón */
+            margin-bottom: 0.5rem;
+            box-shadow: 0 0 15px var(--neon-color); /* Resplandor */
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(5deg); /* Efecto dinámico al tocarlo */
+        }
+
+        /* Nombre del Canal Estilo Gaming */
+        .channel-name {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            margin: 0.5rem 0;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px var(--neon-color), 0 0 20px var(--neon-color);
+            animation: pulseName 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseName {
+            0%, 100% { text-shadow: 0 0 10px var(--neon-color), 0 0 20px var(--neon-color); transform: scale(1); }
+            50% { text-shadow: 0 0 20px var(--neon-color), 0 0 40px var(--neon-color); transform: scale(1.05); }
+        }
+
+        /* Contenedor del Video */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            margin-bottom: 2rem;
+            border: 1px solid #333;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Barra de Estado */
+        .status-bar {
+            background: #222;
+            height: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--neon-color);
+            transition: width 0.5s, background 0.5s;
+            box-shadow: 0 0 10px var(--neon-color);
+        }
+
+        .status-text {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        /* Sección de la Key (Bloqueada al inicio) */
+        .key-section {
+            margin-top: 2rem;
+            padding: 2rem;
+            border: 1px dashed var(--locked-color);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+
+        .key-section.locked {
+            filter: blur(8px);
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .key-section.unlocked {
+            border: 1px solid var(--neon-color);
+            filter: blur(0);
+            pointer-events: all;
+            opacity: 1;
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .key-display {
+            background: #000;
+            color: var(--neon-color);
+            font-size: 1.5rem;
+            padding: 15px;
+            border: 1px solid var(--neon-color);
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            text-align: center;
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        .copy-btn {
+            margin-top: 15px;
+            background: transparent;
+            color: var(--neon-color);
+            border: 1px solid var(--neon-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Chakra Petch', sans-serif;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--neon-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-color);
+        }
+
+        /* Animación de escaneo decorativa */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(0, 255, 65, 0.5);
+            animation: scan 3s linear infinite;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        /* Animación de parpadeo para urgencia */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .blinking {
+            animation: blink 0.5s infinite; /* Parpadeo rápido */
+            color: #ff003c !important; /* Rojo alerta */
+            text-shadow: 0 0 15px #ff003c;
+        }
+
+        /* Botón de Ayuda */
+        .help-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: 1px solid var(--neon-color);
+            color: var(--neon-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: bold;
+            z-index: 10;
+            transition: 0.3s;
+        }
+        .help-btn:hover {
+            background: var(--neon-color);
+            color: #000;
+            box-shadow: 0 0 10px var(--neon-color);
+        }
+
+        /* Modal de Ayuda */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: var(--panel-bg);
+            border: 2px solid var(--neon-color);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: left;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--locked-color);
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+        }
+
+        /* Animación para el mensaje de gracias */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animación Arcoíris (RGB Gaming) */
+        @keyframes rainbow {
+            0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+            17% { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; color: #ffff00; text-shadow: 0 0 10px #ffff00; }
+            33% { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; color: #00ff00; text-shadow: 0 0 10px #00ff00; }
+            50% { border-color: #00ffff; box-shadow: 0 0 15px #00ffff; color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+            67% { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; color: #0000ff; text-shadow: 0 0 10px #0000ff; }
+            83% { border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff; color: #ff00ff; text-shadow: 0 0 10px #ff00ff; }
+            100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; color: #ff0000; text-shadow: 0 0 10px #ff0000; }
+        }
+
+        .thanks-message {
+            margin-top: 15px;
+            color: var(--neon-color);
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--neon-color);
+            /* Combinamos la aparición suave con el efecto arcoíris infinito */
+            animation: fadeInUp 0.8s ease-out forwards, rainbow 3s linear infinite;
+            border: 2px solid var(--neon-color);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px var(--neon-color);
+        }
+
+        /* Notificación Personalizada (Toast) */
+        .custom-notification {
+            position: fixed;
+            top: -100px; /* Oculto arriba */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid var(--neon-color);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 30px var(--neon-color), inset 0 0 10px var(--neon-color);
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            z-index: 2000;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Efecto rebote */
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .custom-notification.show {
+            top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button class="help-btn" onclick="toggleHelp()">?</button>
+        <div class="scan-line"></div>
+        <!-- Asegúrate de que tu imagen se llame 'logo.png' y esté en la misma carpeta -->
+        <img src="logo.jpeg" alt="Mi Logo" class="logo">
+        <div class="channel-name">El Parche YT</div>
+        <h1>System Key Generator</h1>
+        
+        <p>Para desencriptar la clave de acceso, debes visualizar al menos 1 minuto del video.</p>
+
+        <!-- Contenedor donde la API de YouTube inyectará el video -->
+        <div class="video-wrapper">
+            <div id="player"></div>
+        </div>
+
+        <!-- Barra de progreso visual -->
+        <div class="status-bar">
+            <div class="progress-fill" id="progressBar"></div>
+            <div class="status-text" id="statusText">SISTEMA BLOQUEADO - ESPERANDO VIDEO</div>
+        </div>
+
+        <!-- Sección de la contraseña -->
+        <div class="key-section locked" id="keySection">
+            <h3>ACCESS GRANTED</h3>
+            <p>Tu clave personal es:</p>
+            <input type="text" class="key-display" id="secretKeyField" value="" readonly>
+            <button class="copy-btn" id="copyBtn" onclick="copyKey()">Copiar Key</button>
+            <div id="thanksMessage" class="thanks-message" style="display: none;">¡GRACIAS POR PARTICIPAR!</div>
+        </div>
+    </div>
+
+    <!-- Notificación Personalizada -->
+    <div id="customNotification" class="custom-notification">✅ Key Copiada con Éxito</div>
+
+    <!-- Modal de Ayuda -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="toggleHelp()">X</button>
+            <h2 style="color: var(--neon-color); margin-top: 0;">INSTRUCCIONES</h2>
+            <ul style="line-height: 1.6;">
+                <li>Dale <strong>PLAY</strong> al video.</li>
+                <li>Visualiza el contenido durante <strong>1 minuto</strong>.</li>
+                <li>El sistema detectará tu progreso automáticamente.</li>
+                <li>Una vez completado, la contraseña se desbloqueará.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Efecto de sonido (Puedes cambiar el enlace src por tu propio archivo de audio) -->
+    <audio id="unlockSound" src="https://www.myinstants.com/media/sounds/level-up-sound-effect.mp3"></audio>
+    <audio id="copySound" src="https://www.myinstants.com/media/sounds/coin-collect-sound-effect.mp3"></audio>
+
+    <!-- Librería de Confeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // ================= CONFIGURACIÓN =================
+        // 1. Pon aquí el ID de tu video de YouTube (lo que va después de v=)
+        const YOUTUBE_VIDEO_ID = 'jcLWuFh68Y8'; 
+        
+        // 2. SEGURIDAD AUMENTADA (Encriptación Base64)
+        // Para poner TU propia contraseña:
+        // A. Ve a https://www.base64encode.org/ | B. Escribe tu clave y dale a Encode | C. Pega el resultado abajo.
+        // El código de abajo es "GAMER-2024-PRO-KEY" encriptado:
+        const _0xToken = 'MjAyNg==';
+        // =================================================
+
+        // Cargar la API de IFrame de YouTube de forma asíncrona
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var timerInterval;
+        var isUnlocked = false;
+        var watchedTime = 0; // Tiempo real visto en segundos
+        const REQUIRED_TIME = 60; // Tiempo requerido en segundos (1 minuto)
+
+        // Esta función crea el reproductor <iframe> después de que se descarga el código de la API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: YOUTUBE_VIDEO_ID,
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 1, // Mostrar controles
+                    'rel': 0       // No mostrar videos relacionados al final
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Cuando el estado del reproductor cambia
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING && !isUnlocked) {
+                // Si empieza a reproducir, iniciamos el chequeo
+                startTracking();
+            } else {
+                // Si pausa, dejamos de chequear para ahorrar recursos
+                stopTracking();
+
+                // Mostrar mensaje si se pausa
+                if (event.data == YT.PlayerState.PAUSED && !isUnlocked) {
+                    var st = document.getElementById('statusText');
+                    st.innerText = "SISTEMA PAUSADO";
+                    st.classList.remove('blinking');
+                }
+            }
+        }
+
+        function startTracking() {
+            stopTracking(); // Limpiar intervalo previo si existe
+            timerInterval = setInterval(checkProgress, 1000); // Chequear cada segundo
+        }
+
+        function stopTracking() {
+            clearInterval(timerInterval);
+        }
+
+        function checkProgress() {
+            if(isUnlocked) return;
+
+            // Incrementamos el contador solo si se está reproduciendo
+            // Esto evita que adelanten el video, ya que deben esperar los "ticks" del reloj
+            watchedTime += 1;
+
+            // Calcular porcentaje basado en el tiempo requerido (60s)
+            var progressToUnlock = (watchedTime / REQUIRED_TIME) * 100;
+                if(progressToUnlock > 100) progressToUnlock = 100;
+
+                document.getElementById('progressBar').style.width = progressToUnlock + '%';
+                
+                // Contador regresivo visual
+                var timeLeft = REQUIRED_TIME - watchedTime;
+                if (timeLeft < 0) timeLeft = 0;
+                var mins = Math.floor(timeLeft / 60);
+                var secs = Math.floor(timeLeft % 60);
+                var statusText = document.getElementById('statusText');
+                statusText.innerText = "DESBLOQUEANDO EN: " + mins + ":" + (secs < 10 ? "0" : "") + secs;
+
+                // Activar parpadeo si faltan menos de 10 segundos
+                if (timeLeft < 10 && timeLeft > 0) {
+                    statusText.classList.add('blinking');
+                    document.getElementById('progressBar').style.backgroundColor = 'var(--locked-color)';
+                    document.getElementById('progressBar').style.boxShadow = '0 0 15px var(--locked-color)';
+                } else {
+                    statusText.classList.remove('blinking');
+                    document.getElementById('progressBar').style.backgroundColor = 'var(--neon-color)';
+                    document.getElementById('progressBar').style.boxShadow = '0 0 15px var(--neon-color)';
+                }
+
+                // Lógica principal: Si ha cumplido el tiempo requerido
+                if (watchedTime >= REQUIRED_TIME) {
+                    unlockContent();
+                }
+        }
+
+        function unlockContent() {
+            isUnlocked = true;
+            stopTracking();
+            
+            // Reproducir sonido de desbloqueo
+            var audio = document.getElementById("unlockSound");
+            audio.volume = 0.4; // Volumen al 40% para no asustar
+            audio.play().catch(e => console.log("Audio bloqueado por el navegador"));
+
+            // Lanzar animación de confeti estilo Cyberpunk
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#00f3ff', '#ff003c', '#ffffff'] // Azul, Rojo y Blanco
+            });
+
+            // Cambios visuales
+            const keySection = document.getElementById('keySection');
+            const progressBar = document.getElementById('progressBar');
+            const statusText = document.getElementById('statusText');
+            const keyField = document.getElementById('secretKeyField');
+
+            statusText.classList.remove('blinking'); // Detener parpadeo
+            // Quitar clase locked y poner unlocked
+            keySection.classList.remove('locked');
+            keySection.classList.add('unlocked');
+
+            // Actualizar barra a verde
+            progressBar.style.backgroundColor = 'var(--neon-color)';
+            progressBar.style.boxShadow = '0 0 15px var(--neon-color)';
+            statusText.innerText = "SISTEMA DESBLOQUEADO";
+            statusText.style.color = "#000";
+
+            // Insertar la contraseña
+            keyField.value = atob(_0xToken); // Desencriptar automáticamente
+        }
+
+        function copyKey() {
+            var copyText = document.getElementById("secretKeyField");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* Para móviles */
+            navigator.clipboard.writeText(copyText.value);
+            
+            // Mostrar notificación personalizada
+            var audio = document.getElementById("copySound");
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log("Audio bloqueado"));
+
+            // Vibrar en celulares (200ms)
+            if (navigator.vibrate) navigator.vibrate(200);
+
+            var notif = document.getElementById("customNotification");
+            notif.classList.add("show");
+            // Ocultar automáticamente después de 3 segundos
+            setTimeout(function() {
+                notif.classList.remove("show");
+            }, 3000);
+
+            // Ocultar el botón con animación suave
+            var btn = document.getElementById("copyBtn");
+            btn.style.opacity = "0";
+            btn.style.pointerEvents = "none";
+            
+            // Quitar del layout después de la animación (0.5s)
+            setTimeout(function() {
+                btn.style.display = "none";
+                document.getElementById("thanksMessage").style.display = "block";
+            }, 500);
+        }
+
+        function toggleHelp() {
+            var modal = document.getElementById("helpModal");
+            if (modal.style.display === "flex") {
+                modal.style.display = "none";
+            } else {
+                modal.style.display = "flex";
+            }
+        }
+    </script>
+</body>
+</html>
