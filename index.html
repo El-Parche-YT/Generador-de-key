@@ -209,7 +209,6 @@
         }
 
         .blinking {
-            animation: blink 0.5s infinite; /* Parpadeo rápido */
             color: #ff003c !important; /* Rojo alerta */
             text-shadow: 0 0 15px #ff003c;
         }
@@ -352,8 +351,8 @@
         <div class="key-section locked" id="keySection">
             <h3>ACCESS GRANTED</h3>
             <p>Tu clave personal es:</p>
-            <input type="password" class="key-display" id="secretKeyField" value="" readonly>
-            <button class="copy-btn" id="copyBtn" onclick="copyKey()">Copiar Key</button>
+            <input type="text" class="key-display" id="secretKeyField" value="" readonly>
+            <button class="copy-btn" id="copyBtn" onclick="copyKey()" style="display: none;">Copiar Key</button>
             
             <!-- Sección del Link Desbloqueado -->
             <div id="linkContainer" style="display: none; margin-top: 1.5rem; border-top: 1px dashed var(--neon-color); padding-top: 1rem;">
@@ -395,14 +394,14 @@
     <script>
         // ================= CONFIGURACIÓN =================
         // 1. Pon aquí el ID de tu video de YouTube (lo que va después de v=)
-        const YOUTUBE_VIDEO_ID = 'lU6nxSNZVRc'; 
+        const YOUTUBE_VIDEO_ID = 'kuTWv3Gq2nw'; 
         
         // 2. SEGURIDAD AUMENTADA (Encriptación Base64)
         // Para poner TU propia contraseña:
         // A. Ve a https://www.base64encode.org/ | B. Escribe tu clave y dale a Encode | C. Pega el resultado abajo.
         // El código de abajo es "GAMER-2024-PRO-KEY" encriptado:
         const _0xToken = 'MTM5';
-        const LINK_URL = 'https://cuty.io/5JayYUAmUH'; // Pon aquí tu link de cuty
+        const LINK_URL = 'https://cuty.io/DN50yXhzbgn'; // Pon aquí tu link de cuty
         // =================================================
 
         // Reproducir sonido al cargar la página (cuando sale el modal)
@@ -541,7 +540,7 @@
             statusText.style.color = "#000";
 
             // Insertar la contraseña
-            keyField.value = atob(_0xToken); // Desencriptar automáticamente
+            keyField.value = "no tiene contraseña"; // Desencriptar automáticamente
 
             // Mostrar el link y configurar el botón
             document.getElementById('linkContainer').style.display = 'block';
